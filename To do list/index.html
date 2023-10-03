@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #todo-list {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+        }
+        button {
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="todo-list">
+        <h1>To-Do List</h1>
+        <input type="text" id="task" placeholder="Enter a task">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="tasks">
+            <!-- Tasks will be added here -->
+        </ul>
+    </div>
+    <script>
+        function addTask() {
+            const taskText = document.getElementById("task").value;
+            if (taskText.trim() === "") {
+                alert("Please enter a task.");
+                return;
+            }
+
+            const taskList = document.getElementById("tasks");
+            const li = document.createElement("li");
+            li.innerHTML = `
+                ${taskText}
+                <button onclick="editTask(this)">Edit</button>
+                <button onclick="removeTask(this)">Delete</button>
+            `;
+            taskList.appendChild(li);
+
+            document.getElementById("task").value = "";
+        }
+
+        function removeTask(button) {
+            const li = button.parentNode;
+            const taskList = document.getElementById("tasks");
+            taskList.removeChild(li);
+        }
+
+        function editTask(button) {
+            const li = button.parentNode;
+            const taskText = li.firstChild.textContent;
+            const newText = prompt("Edit task:", taskText);
+            if (newText !== null && newText.trim() !== "") {
+                li.firstChild.textContent = newText;
+            }
+        }
+    </script>
+</html>
